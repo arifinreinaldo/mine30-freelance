@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:vibration/vibration.dart';
 
 void main() {
   runApp(const MyApp());
@@ -195,16 +194,13 @@ class _AnswerButtonState extends State<AnswerButton> {
     setState(() => _isPressed = false);
   }
 
-  void _onTap() {
-    // Trigger haptic feedback - platform specific for best results
-    if (Platform.isIOS) {
-      // iOS: Use Taptic Engine (works even in silent mode)
-      HapticFeedback.heavyImpact();
-    } else if (Platform.isAndroid) {
-      // Android: Use vibration
-      HapticFeedback.vibrate();
-      HapticFeedback.heavyImpact();
+  Future<void> _onTap() async {
+    // Trigger vibration using the vibration package (more reliable)
+    if (await Vibration.hasVibrator() ?? false) {
+      Vibration.vibrate(duration: 10);
     }
+    // Also try HapticFeedback as fallback
+    HapticFeedback.heavyImpact();
     widget.onTap();
   }
 
