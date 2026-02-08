@@ -40,19 +40,17 @@ class _ChooseAnswerScreenState extends State<ChooseAnswerScreen> {
     });
 
     // Hide confirmation after 1.5 seconds
-    Future.delayed(const Duration(milliseconds: 1500), () {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Tap registered $answer'),
-            duration: const Duration(seconds: 1),
-            backgroundColor: Colors.grey[900],
-            behavior: SnackBarBehavior.floating,
-            margin: const EdgeInsets.all(16),
-          ),
-        );
-      }
-    });
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Tap registered $answer'),
+          duration: const Duration(seconds: 1),
+          backgroundColor: Colors.grey[900],
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.all(16),
+        ),
+      );
+    }
   }
 
   @override
@@ -195,11 +193,25 @@ class _AnswerButtonState extends State<AnswerButton> {
   }
 
   Future<void> _onTap() async {
-    // Trigger vibration using the vibration package (more reliable)
-    if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(duration: 10);
+    // Trigger vibration - try multiple methods for reliability
+    try {
+      final hasVibrator = await Vibration.hasVibrator() ?? false;
+      if (hasVibrator) {
+        // Check if device supports custom vibration duration
+        final hasCustomSupport =
+            await Vibration.hasCustomVibrationsSupport() ?? false;
+        if (hasCustomSupport) {
+          Vibration.vibrate(duration: 100);
+        } else {
+          // Use default vibration (for iOS and some Android devices)
+          Vibration.vibrate();
+        }
+      }
+    } catch (e) {
+      // Fallback to HapticFeedback if Vibration fails
+      debugPrint('Vibration error: $e');
     }
-    // Also try HapticFeedback as fallback
+    // Always try HapticFeedback as additional feedback
     HapticFeedback.heavyImpact();
     widget.onTap();
   }
