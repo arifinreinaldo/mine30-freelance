@@ -105,50 +105,53 @@ class _ChooseAnswerScreenState extends State<ChooseAnswerScreen> {
             Expanded(
               child: Container(
                 color: const Color(0xFFF5F5F5),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: GridView.count(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 16,
-                            crossAxisSpacing: 16,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: [
-                              AnswerButton(
-                                label: 'A',
-                                color: const Color(0xFF4CAF50),
-                                isSelected: _selectedAnswer == 'A',
-                                onTap: () => _onAnswerSelected('A'),
-                              ),
-                              AnswerButton(
-                                label: 'B',
-                                color: const Color(0xFF3F51B5),
-                                isSelected: _selectedAnswer == 'B',
-                                onTap: () => _onAnswerSelected('B'),
-                              ),
-                              AnswerButton(
-                                label: 'C',
-                                color: const Color(0xFFD4A732),
-                                isSelected: _selectedAnswer == 'C',
-                                onTap: () => _onAnswerSelected('C'),
-                              ),
-                              AnswerButton(
-                                label: 'D',
-                                color: const Color(0xFFC0392B),
-                                isSelected: _selectedAnswer == 'D',
-                                onTap: () => _onAnswerSelected('D'),
-                              ),
-                            ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Center(
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: GridView.count(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 16,
+                              crossAxisSpacing: 16,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              children: [
+                                AnswerButton(
+                                  label: 'A',
+                                  color: const Color(0xFF4CAF50),
+                                  isSelected: _selectedAnswer == 'A',
+                                  onTap: () => _onAnswerSelected('A'),
+                                ),
+                                AnswerButton(
+                                  label: 'B',
+                                  color: const Color(0xFF3F51B5),
+                                  isSelected: _selectedAnswer == 'B',
+                                  onTap: () => _onAnswerSelected('B'),
+                                ),
+                                AnswerButton(
+                                  label: 'C',
+                                  color: const Color(0xFFD4A732),
+                                  isSelected: _selectedAnswer == 'C',
+                                  onTap: () => _onAnswerSelected('C'),
+                                ),
+                                AnswerButton(
+                                  label: 'D',
+                                  color: const Color(0xFFC0392B),
+                                  isSelected: _selectedAnswer == 'D',
+                                  onTap: () => _onAnswerSelected('D'),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
+                      const SizedBox(height: 20),
+                    ],
+                  ),
                 ),
               ),
             ),
